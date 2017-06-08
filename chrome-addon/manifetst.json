@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+
+  "name": "jojo's blog-timeline addons",
+  "description": "This extension let you save your timelines on leancloud.",
+  "version": "1.0",
+
+  "permissions": [
+//    "https://secure.flickr.com/"
+  ],
+  "browser_action": {
+    "default_icon": "24.jpg",
+    "default_popup": "popup.html"
+  }
+}
