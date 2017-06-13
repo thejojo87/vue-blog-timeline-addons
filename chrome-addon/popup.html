@@ -1,37 +1,67 @@
-<!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-    </style>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 600px;
+      height: 800px;
+    }
+    div {
+      /*line-height: 100px;*/
+      font-size: 20px;
+      text-align: center;
+    }
+    .radio-inline{
+      font-size: 20px;
+    }
+    #save_checkbox{
+    }
+  </style>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/av.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/data_persistent.js"></script>
+  <script src="popup.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+<body>
+<div id="clock_div"></div>
+<!--这里开始就是我自由发挥了-->
+<div id="extension_name">
+<h2>Jojo's Blog timeline</h2>
+</div>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
-    <script src="popup.js"></script>
-  </head>
-  <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
-  </body>
+<div id="unlogined">
+  <a class="btn" href="register.html">Register</a>
+  <a class="btn" href="login.html">Login</a>
+  <p>
+    Login to save your read timelines everywhere.
+  </p>
+</div>
+
+<div id="login_info" style="margin-left: 12px;" hidden>
+  <a id="username" style="cursor: default; text-decoration: inherit;"></a>
+  <a class="btn" id="logout">logout</a>
+
+
+<div id="save_checkbox" class="radio">
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="saveOneTab" value="option1" checked><a>保存当前页</a>
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="saveAllTab" value="option2"><a>保存全部标签页</a>
+  </label>
+</div>
+
+<div>
+<button type="button" class="btn btn-success" id="save_to_leancloud">保存</button>
+</div>
+</div>
+<script src="js/my_clock.js"></script>
+</body>
 </html>
 

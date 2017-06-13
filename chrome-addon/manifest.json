@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "Save timelines in your blog",
+  "description": "This extension shows a Google Image search result for the current page",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png"
+    },
+    "default_title": "我的timeline",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon16.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus", "cookies", "tabs",
+    "https://ajax.googleapis.com/"
+  ],
+//  "options_page": "options.html",
+  "background": {
+    "scripts": ["js/jquery-3.2.1.min.js", "js/av.js", "js/data_persistent.js", "js/backgroundjs.js"]
+  },
+  "content_scripts": [{
+    "js": ["js/jquery-3.2.1.min.js", "js/av.js", "js/data_persistent.js", "js/backgroundjs.js"],
+    "matches": ["http://*/*", "https://*/*"]
+  }]
+}
