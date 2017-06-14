@@ -27,6 +27,7 @@
   <script src="js/data_persistent.js"></script>
   <script src="popup.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <script src="js/jquery.twbsPagination.js"></script>
 </head>
 <body>
 <div id="clock_div"></div>
@@ -59,6 +60,27 @@
 
 <div>
 <button type="button" class="btn btn-success" id="save_to_leancloud">保存</button>
+</div>
+
+<div id="displayTimelines">
+  <!--<h3>这里要展示保存到的timeline</h3>-->
+
+  <ul class="list-group" id="page-content">
+    <li class="list-group-item">免费域名注册</li>
+    <li class="list-group-item">免费 Window 空间托管</li>
+    <li class="list-group-item">图像的数量</li>
+    <li class="list-group-item">
+      <span class="badge">新</span>
+      24*7 支持
+    </li>
+    <li class="list-group-item">每年更新成本</li>
+    <li class="list-group-item">
+      <span class="badge">新</span>
+      折扣优惠
+    </li>
+  </ul>
+
+  <ul id="pagination-demo" class="pagination-sm"></ul>
 </div>
 </div>
 <script src="js/my_clock.js"></script>

@@ -21,7 +21,23 @@
     "contextMenus", "cookies", "tabs",
     "https://ajax.googleapis.com/"
   ],
-//  "options_page": "options.html",
+  "commands": {
+    "saveCurrentTab": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "Alt+Y"
+      },
+      "description": "设置当前tab保存的快捷键"
+    },
+    "saveAllTabs": {
+      "suggested_key": {
+        "default": "Alt+W",
+        "mac": "Alt+W"
+      },
+      "description": "设置全部tab保存的快捷键"
+    }
+  },
+  //  "options_page": "options.html",
   "background": {
     "scripts": ["js/jquery-3.2.1.min.js", "js/av.js", "js/data_persistent.js", "js/backgroundjs.js"]
   },

@@ -55,4 +55,43 @@ function LeanCloudStorage() {
         });
     }
 
+    // 在页面显示之前，把leancloud获取的数据加工一下
+    this.parseItem = function(repo) {
+        var item = {};
+        item.owner = repo.get("owner").id;
+        item.day = repo.get("day");
+        item.url = repo.get("url");
+        item.title = repo.get("title");
+        item.objectId = repo.get("objectId");
+        return item;
+    }
+
+    // 从leancloud获取数据，下载到本地等待展示
+    this.getTimelines =  function (callback) {
+        let query = new AV.Query('ReadInfo')
+        query.equalTo('owner', AV.User.current())
+        console.log(this.username)
+        query.limit(1000)
+        // leancloud默认是100条数据，
+        query.ascending('createdAt')
+        let _this = this;
+        // 总觉得其实这一句没必要用=>不久完了么？
+        query.find().then(function (results) {
+            console.log(results)
+            if (results != null && results.length > 0) {
+                console.log("result is not null, length is " + results.length);
+                console.log("results " + results);
+                var array = [];
+                for (var i = 0; i < results.length; i++) {
+                    array[i] = _this.parseItem(results[i]);
+                }
+                callback(array);
+            } else {
+                callback(null);
+            }
+        }, function (error) {
+            callback(null);
+            console.error('Failed to find objects, with error message: ' + error.message);
+        });
+    }
 }

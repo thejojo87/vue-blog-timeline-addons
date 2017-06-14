@@ -16,22 +16,26 @@ pocket 会让你登陆，并且保存到本地
 保存过的网页，会显示红色图标，没保存过就是灰色图标。
 
 会弹出来一个新的登陆界面，也不对，应该有本地默认保存leancloud的数据码就可以了。
-![mark](http://oc2aktkyz.bkt.clouddn.com/markdown/20170610/151404116.png)
+（完成）
 
-![mark](http://oc2aktkyz.bkt.clouddn.com/markdown/20170609/113044020.png)
-2. 用快捷键或者图标的方式保存数据
-3. 应该有个选项，默认的话，把全部的页面保存或者只保存一个
-有个options选项界面，manifest里配置options_page
-
+2. 用快捷键或者图标的方式保存数据- （完成）
+3. 应该有个选项，默认的话，把全部的页面保存或者只保存一个 （完成）
 4. 能不能同时保存到evernote？或者github？
-5. 登陆后应该有个选项，保存此tab，还是全部tab
+5. 登陆后应该有个选项，保存此tab，还是全部tab （完成）
 6. 登陆后应该展示所有的timeline保存的列表
 7. 登陆后应该有个删除timeline的选项
-8. 鼠标右键，可以保存全部或者此页
-
+8. 鼠标右键，可以保存全部或者此页（完成）
+9. 有个options选项界面，manifest里配置options_page（配置github或者evernote什么的）
+10. tag功能
+11. 可以写简短的感想和评论
+12. 有一个阅读状态，等待阅读，完成，
 
 或者说打开就直接新建一个tab会好很多？
-1. 打开后，登陆界面，下面有register
+我想到一个方法用来保存在localstorage了。
+登陆之后同时保存在localstorage不久可以了么？
+但是这个插件功能就是在有网络的情况下，感觉没必要localstorage
+
+
 
 ****
 
@@ -41,17 +45,19 @@ pocket 会让你登陆，并且保存到本地
 gitlab，chrome扩展
 http://www.jianshu.com/p/cf5b3fba44ea
 
+最好的教程
 http://www.ituring.com.cn/book/1421
-
-
+开发文档官方
+https://crxdoc-zh.appspot.com/extensions/tabs#method-query
+学习的源码
 https://segmentfault.com/a/1190000004360319
-
 这里是一个av保存图片的例子leancloud
 
 http://www.jianshu.com/p/5531e2169843
 
-如何在chrome开发里使用vue
-https://blog.damirmiladinov.com/vuejs/building-chrome-extension-with-vue.html#.WTmFH8a-ubg
+
+台湾人写的教程，快捷键部分有帮助
+http://ithelp.ithome.com.tw/articles/10187354
 
 真正的开发chrome的教程
  不过这里有点落伍了
@@ -59,8 +65,6 @@ https://blog.damirmiladinov.com/vuejs/building-chrome-extension-with-vue.html#.W
  https://www.foraker.com/blog/making-chrome-extensions-with-yeoman
  
  这里也有个项目，我在想要不要复制这个？
- 
- https://github.com/vuejs/vue-devtools
  
  todo
  http://www.cnblogs.com/smartXiang/p/6929617.html
@@ -70,7 +74,6 @@ https://github.com/airloy/objective-chrome-extension
 
 vue.js 初体验：Chrome 插件开发实录
 这里源代码我放在微云上了
-也可以使用，要不把这个修改算了
 这里明显少了太多东西，貌似也不是使用gulp做的。
 因为他用的是vue1.0版本
 
@@ -102,14 +105,10 @@ https://www.mmxiaowu.com/article/5848227ed4352863efb55463
 放弃了，使用vue来开发chrome插件了。
 直接用js来写也未尝不可，反正也很简单。
 
-
-
 chrome开发教程
 http://www.cnblogs.com/pingfan1990/p/4560215.html
 知乎上chrome开发教程资源帖子
 https://www.zhihu.com/question/20179805
-
-
 
 ##### 1.配置manifest文件
 
@@ -181,9 +180,6 @@ backgroundjs,启动data_psersistent的方法，把新建的storage，init了。
 所以要在background文件里，就要操作本地数据。
 所以，需要popup之后，发送消息过来。
 
-
-
-
 ##### 3. login界面，register界面 (完成)
 
 只有个标题： 返回（这个使用a标签来做了，href 变成popup.html）
@@ -201,6 +197,8 @@ currentUser 并没有被传送过去，只是做做样子罢了。
 之后使用了这个av，登陆，那么这个av里的currentuser就不是空了，
 之后回到popup的时候那么就可以渲染用户名了。
 2. 新建了一个leancloudStorage,init干什么？
+每一个页面等于是独立的html和js文件。
+所以需要init
 
 消息传递文档：
 https://crxdoc-zh.appspot.com/apps/messaging
@@ -211,6 +209,7 @@ https://crxdoc-zh.appspot.com/apps/messaging
 但是当我试图使用jquery的￥ready的时候发现没反应。
 而直接写上就有反应。
 这是怎么回事？
+其实是有反应的，但是console得在扩展界面里才能看到，因为bg是运行在后台的。
 
 这里一个是添加了右键菜单，一个是添加了一个监视器
 storage，这个以后再看看。
@@ -234,6 +233,49 @@ popupjs会调用这里的例子，并且init一个对象
 background调用datapersistent里的方法完成？
 这样的话是不是等于和鼠标右键统一起来了？
 消息内容是什么？是保存当前tab还是全部tab的选项？
+
+![mark](http://oc2aktkyz.bkt.clouddn.com/markdown/20170614/011745768.png)
+
+这里有个radio checkbox，当选择一个然后按下保存之后，
+popupjs，发出一个message，给backgroundjs。
+接收保存的类型之后，query方法获取当前tab或者全部tabs。
+然后调用data——persistent里，storage的save方法来向leancloud上传数据
+
+这一套代码，在鼠标右键里简单复用就可以了。
+
+##### 7. 添加快捷键界面
+
+http://ithelp.ithome.com.tw/articles/10187354
+思路就是 使用commands.onCommand.addListener 来监控按键。
+然后在manifest里command里设置
+
+我在想，直接写死呢？还是让用户自己选择快捷键呢?
+还是直接写死算了。简单点
+alt+q alt+w
+
+manifest里写快捷键，然后去backgroundjs里填写逻辑。
+也就10行左右。
+
+##### 8. 展示数据，并且分页
+分页有点头痛。
+leancloud他一次查询是默认100，最多1000条数据的。
+我固然可以分时段，分查询返回的数量状态获取全部数据。
+但是我在想，这样未免太麻烦了。
+我可不可以只查询总数，而生成分页。
+一开始只展示前20个数据。
+当点击分页后再请求并展示下一个数据？
+但是似乎这也有点麻烦。
+全部数据下载下来应该其实也没多大才对吧。
+
+https://segmentfault.com/q/1010000005150169
+
+我选择，请求所有数据，并且用按钮来刷新展示元素。
+bootstrap只提供了样式，我还得自己修改样式，也不是不可以。
+但是能偷懒就偷懒吧。
+
+试试这个插件吧
+http://esimakin.github.io/twbs-pagination/
+
 
 
 

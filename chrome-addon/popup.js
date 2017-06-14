@@ -1,5 +1,61 @@
 
 let storage;
+// 显示的页面数字
+let display_page = 1;
+// leacncloud里查询到的总数据要放在这里
+let display_array  = [];
+// 每一页要显示的timeline数量
+let display_items_per_page = 6
+
+// 这里需要调用datapersistent的方法，获取
+function loadTimelines() {
+    storage.getTimelines(function (array) {
+        console.log('返回了array')
+        // 这里要把返回的数据，渲染在popup页面上
+        if (array !== null){
+            display_array = array
+            console.log(display_array[0].url)
+            addPageModule(display_array.length)
+            displayTimelines(display_page)
+        }
+    })
+}
+// 分页模块
+function addPageModule(page_length) {
+    // 分页模块
+    var pages = Math.ceil(page_length / display_items_per_page)
+    // pages = Math.round( parseFloat(page_length / display_items_per_page) );
+    console.log('math的值是' + pages)
+    // if (page_length <=5 * display_items_per_page) {
+    //     pages = page_length
+    // }else {
+    //     pages = Math.ceil(page_length / display_items_per_page)
+    // }
+    $('#pagination-demo').twbsPagination({
+        totalPages: pages,
+        visiblePages: display_items_per_page,
+        onPageClick: function (event, page) {
+            display_page = page
+            console.log('page 这个被触发了')
+            // 第一次初始化的时候disply_array是空，如果赋值的话会出错的
+            if (display_array.length > 0) {
+                displayTimelines(page)
+            }
+        }
+    });
+}
+
+// 这里是把popup页面元素渲染
+function displayTimelines(display_page) {
+    $('#page-content').text('');
+    for (i = 1; i <= display_items_per_page; i++) {
+        console.log(i)
+        // console.log(display_array[0]["title"])
+        if (display_array[display_page * display_items_per_page - 6 + i]) {
+            $('#page-content').append('<a href="' + display_array[display_page * display_items_per_page - 6 + i].url + '" class="list-group-item">' + display_array[display_page * display_items_per_page - 6 + i].title + '</a>')
+        }
+    }
+}
 
 function sendLoginedRequest() {
     let currentUser = AV.User.current();
@@ -29,7 +85,7 @@ function onUserLoginStateChanged(isLogined, storage) {
         //     console.log('sendMessageresponse')
         // });
     }
-    // loadImage(storage);
+    loadTimelines(storage)
 }
 
 $(document).ready(function () {
@@ -43,14 +99,14 @@ $(document).ready(function () {
     // 这个在数据存储模块
     storage = new LeanCloudStorage();
     storage.initStorage();
-    var currentUser = AV.User.current();
+    let currentUser = AV.User.current();
     // 一开始这里肯定是isnotdefined
     if (currentUser != null) {
         console.log(currentUser)
         currentUser.isAuthenticated().then(function(authenticated){
             if (authenticated) {
                 console.log('is authenticated 对了')
-                onUserLoginStateChanged(true);
+                onUserLoginStateChanged(true, storage);
                 $('#username').text("user: " + currentUser.getUsername());
                 $('#login_info').show();
                 $('#unlogined').hide();

@@ -28,12 +28,17 @@ function saveAllTabs() {
         // 在这里调用
         saveToLeancloud(tabs)
     });
-}
+};
 
+// 直接转到timeline主页，这个以后可不可以设置呢？
+function goTimelinePage() {
+    chrome.tabs.create({ url: 'http://localhost:8080/#/timeline' })
+}
 // 鼠标右键添加一个项目
 let menu = chrome.contextMenus.create({
     "title": "keep timeline in blog", // 右键菜单显示信息
-    "contexts": ["page"] // 鼠标选择文本时才生效
+    "contexts": ["page"], // 鼠标选择文本时才生效
+    "onclick": goTimelinePage
 });
 
 chrome.contextMenus.create({
@@ -53,7 +58,6 @@ chrome.contextMenus.create({
 
 // 不知道这里有没有效果，貌似鼠标右键放在这里是没有效果的
 $(document).ready(function(){
-    console.log("menu");
     storage = new LeanCloudStorage();
     storage.initStorage();
     chrome.runtime.onMessage.addListener(
@@ -84,4 +88,14 @@ $(document).ready(function(){
                 sendResponse({farewell: "再见"});
             }
         });
+
+    // 监控快捷键
+    chrome.commands.onCommand.addListener(function(command) {
+        console.log('Command:', command);
+        if (command == "saveCurrentTab") {
+            saveCurrentTab()
+        }else if (command == "saveAllTabs") {
+            saveAllTabs()
+        }
+    });
 });
