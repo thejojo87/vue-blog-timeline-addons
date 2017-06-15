@@ -3,30 +3,31 @@
  */
 // 这个是本地存储
 let storage;
+let currentUser;
 
-function saveToLeancloud(tabs) {
-    storage.saveData(tabs)
+function saveToLeancloud(tabs, currentUser) {
+    storage.saveData(tabs, currentUser)
     // 这里调用data_persistent的api，保存到leancloud里去
 }
 
-function saveCurrentTab() {
+function saveCurrentTab(currentUser) {
     chrome.tabs.query({
         active: true,
         currentWindow: true
     }, (tabs) => {
         console.log(tabs[0])
         // 在这里调用
-        saveToLeancloud(tabs)
+        saveToLeancloud(tabs, currentUser)
     });
 }
 
-function saveAllTabs() {
+function saveAllTabs(currentUser) {
     chrome.tabs.query({
         currentWindow: true
     }, (tabs) => {
         console.log(tabs)
         // 在这里调用
-        saveToLeancloud(tabs)
+        saveToLeancloud(tabs, currentUser)
     });
 };
 
@@ -60,13 +61,11 @@ chrome.contextMenus.create({
 $(document).ready(function(){
     storage = new LeanCloudStorage();
     storage.initStorage();
+    console.log(AV.User.current())
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
-            console.log(request.className);
             if (request.className != null){
                 console.log('这次是初始化，要设置storage的username')
-                console.log(request.data['username'])
-                // storage.setData(request.data['username'])
                 console.log('初始化结束了')
             } else if (request.saveType != null){
                 console.log('这是保存数据')
@@ -82,20 +81,45 @@ $(document).ready(function(){
                     saveAllTabs()
                 }
                 console.log('保存数据结束了')
+            } else if (request.logout != null) {
+                currentUser = null
+                AV.User.logOut();
+                console.log('现在的用户名是'+ AV.User.current())
+            } else if (request.login != null) {
+                console.log('login开始了background')
+                console.log(request.username)
+                console.log(request.password)
+                AV.User.logIn(request.username,request.password).then(function (loginedUser) {
+                    console.log("success");
+                    console.log(loginedUser)
+                    currentUser = loginedUser;
+                }, function (error) {
+                    alert(JSON.stringify(error));
+                });
+                console.log('现在的用户名是'+ AV.User.current())
+                console.log(AV.User.current())
             }
-            console.log(request.saveType)
-            if (request.saveType === "currentTab"){
-                sendResponse({farewell: "再见"});
-            }
+            // if (request.saveType === "currentTab"){
+            //     sendResponse({farewell: "再见"});
+            // }
         });
 
     // 监控快捷键
     chrome.commands.onCommand.addListener(function(command) {
         console.log('Command:', command);
-        if (command == "saveCurrentTab") {
-            saveCurrentTab()
-        }else if (command == "saveAllTabs") {
-            saveAllTabs()
+        console.log(storage)
+        console.log('现在的用户名是'+ AV.User.current())
+        console.log( AV.User.current())
+        console.log(currentUser)
+        if (storage != null && currentUser != null ) {
+            if (command == "saveCurrentTab") {
+                saveCurrentTab(currentUser)
+            }else if (command == "saveAllTabs") {
+                saveAllTabs(currentUser)
+            }
+        } else {
+            alert('请先登陆')
         }
+
     });
 });

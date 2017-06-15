@@ -22,13 +22,13 @@ pocket 会让你登陆，并且保存到本地
 3. 应该有个选项，默认的话，把全部的页面保存或者只保存一个 （完成）
 4. 能不能同时保存到evernote？或者github？
 5. 登陆后应该有个选项，保存此tab，还是全部tab （完成）
-6. 登陆后应该展示所有的timeline保存的列表
-7. 登陆后应该有个删除timeline的选项
+6. 登陆后应该展示所有的timeline保存的列表 (完成)
+7. 登陆后应该有个删除timeline的选项 (完成)2017-06-15 17:58:36
 8. 鼠标右键，可以保存全部或者此页（完成）
 9. 有个options选项界面，manifest里配置options_page（配置github或者evernote什么的）
 10. tag功能
 11. 可以写简短的感想和评论
-12. 有一个阅读状态，等待阅读，完成，
+12. 有一个阅读状态，等待阅读，完成，(完成)2017-06-15 17:58:41
 
 或者说打开就直接新建一个tab会好很多？
 我想到一个方法用来保存在localstorage了。
@@ -216,8 +216,6 @@ storage，这个以后再看看。
 
 backgroundpage 页面可以在扩展程序界面里，检查视图里可以看到
 
-
-
 ##### 5. data_persistent.js
 
 这里一个LeanCloudStorage这个方法包装了所有leancloud的方法。
@@ -276,7 +274,21 @@ bootstrap只提供了样式，我还得自己修改样式，也不是不可以�
 试试这个插件吧
 http://esimakin.github.io/twbs-pagination/
 
+![mark](http://oc2aktkyz.bkt.clouddn.com/markdown/20170615/033333246.png)
 
+##### 9. 阅读状态和删除功能
+大部分功能都在popupjs里完成的。
+逻辑很简单，展示的数据条加上一个checkbox，还有改变状态的按钮和删除的按钮
+打上勾按钮出发操作。
+jquery来操作的，因为用原生js实在是太麻烦了。
+
+![mark](http://oc2aktkyz.bkt.clouddn.com/markdown/20170615/180211326.png)
+
+##### 10. 用户登陆系统bug
+用户保存的信息我一开始是用AV.User.current()来设置的。
+但是发现这个动作是在background里进行，可是，在popup里logtout，并不等于在background里退出。
+av.init是全局的，只需要一次初始化就可以了。
+但是login，logout，涉及到的av.user是需要在每一个html和js里，都要初始化一边的，因为chrome并不共享数据。
 
 
 #### 开发firefox插件

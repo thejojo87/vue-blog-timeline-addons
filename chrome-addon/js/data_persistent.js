@@ -32,7 +32,7 @@ function LeanCloudStorage() {
     }
 
     // 保存到leancloud-一个标签页
-    this.saveData = function (data) {
+    this.saveData = function (data, currentUser) {
         let ReadInfo = AV.Object.extend('ReadInfo')
 
         data.forEach(function (value) {
@@ -42,7 +42,8 @@ function LeanCloudStorage() {
             item.set('url', value.url)
             item.set('title', value.title)
             item.set('day', day)
-            item.set('owner', AV.User.current())
+            item.set('isFinished', false)
+            item.set('owner', currentUser)
             item.save().then(()=> {
                 //  发布成功，跳转到商品 list 页面
                 // 这里应该发消息，关掉popup界面
@@ -62,10 +63,28 @@ function LeanCloudStorage() {
         item.day = repo.get("day");
         item.url = repo.get("url");
         item.title = repo.get("title");
+        item.isFinished = repo.get("isFinished");
         item.objectId = repo.get("objectId");
         return item;
     }
 
+    // 修改finished状态
+    this.changeFinishStatus = function (objId,status) {
+        var statusToSave = AV.Object.createWithoutData('ReadInfo', objId);
+        statusToSave.set('isFinished', status);
+        statusToSave.save();
+    }
+
+    // 删除数据
+    this.deleteTimelines = function (objId) {
+        var timelinesToDelete = AV.Object.createWithoutData('ReadInfo', objId);
+        timelinesToDelete.destroy().then(function (success) {
+            // 删除成功
+            console.log(success)
+        }, function (error) {
+            // 删除失败
+        });
+    }
     // 从leancloud获取数据，下载到本地等待展示
     this.getTimelines =  function (callback) {
         let query = new AV.Query('ReadInfo')
