@@ -37,7 +37,6 @@
       "description": "设置全部tab保存的快捷键"
     }
   },
-  //  "options_page": "options.html",
   "background": {
     "scripts": ["js/jquery-3.2.1.min.js", "js/av.js", "js/data_persistent.js", "js/backgroundjs.js"]
   },
