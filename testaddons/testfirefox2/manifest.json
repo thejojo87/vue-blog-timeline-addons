@@ -1,0 +1,41 @@
+{
+
+  "manifest_version": 2,
+  "name": "Borderify",
+  "version": "1.0",
+
+  "description": "Adds a solid red border to all webpages matching mozilla.org.",
+
+  "icons": {
+    "48": "images/icon48.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "267222987@qq.com"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "browser_action": {
+    "default_icon": "button/24.jpg",
+    "default_title": "Beastify",
+    "default_popup": "popup/choose_beast.html"
+  },
+
+  "web_accessible_resources": [
+    "beasts/frog.jpg",
+    "beasts/turtle.jpg",
+    "beasts/snake.jpg"
+  ]
+//  "content_scripts": [
+//    {
+//      "matches": ["*://*.mozilla.org/*"],
+//      "js": ["borderify.js"]
+//    }
+//  ]
+
+}

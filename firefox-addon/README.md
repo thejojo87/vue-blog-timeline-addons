@@ -29,7 +29,6 @@ pocket 会让你登陆，并且保存到本地
 10. tag功能
 11. 可以写简短的感想和评论
 12. 有一个阅读状态，等待阅读，完成，(完成)2017-06-15 17:58:41
-13. 使用notification来通知状态
 
 ****
 
@@ -284,11 +283,13 @@ jquery来操作的，因为用原生js实在是太麻烦了。
 av.init是全局的，只需要一次初始化就可以了。
 但是login，logout，涉及到的av.user是需要在每一个html和js里，都要初始化一边的，因为chrome并不共享数据。
 
+
 #### 开发firefox插件
 
 ##### 参考
 
 参考copy urls export 这个插件
+
 
 https://github.com/kashiif/copy-urls-expert
 
@@ -313,23 +314,3 @@ https://developer.mozilla.org/zh-CN/Add-ons/WebExtensions/Your_first_WebExtensio
 这是新建的第一个教程，后台遇到firefox主页，就给页面border添加一个红色样式。
 貌似和chrome没什么区别。
 看看第二个教程
-
-
-https://developer.mozilla.org/zh-CN/Add-ons/WebExtensions/Chrome_incompatibilities
-不兼容的地方
-
-#### 结论
-就是基本上和chrome一模一样。
-只不过有点小小的区别和bug。
-1. 退出，并登陆之后，如果保存的话，owner为空，更还状态或者删除的时候owner会补充上。
-原因是，save数据的时候，并没有把currentUser传送过去。
-但是令我惊奇的事情是，这里av.User.getcurrent能用了。而且没有推出登陆后的错误。
-应该是chrome和firefox的不同造成的。
-那就很简单了。把current传送过去就好了。
-
-2. alert 并不会出现
-Firefox 不支持从后台标签页使用 alert()、confirm() 或 prompt()。
-使用了notification
-发现很好用。
-需要添加permission
-

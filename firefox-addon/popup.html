@@ -1,0 +1,85 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 600px;
+      height: 800px;
+    }
+    div {
+      /*line-height: 100px;*/
+      font-size: 20px;
+      text-align: center;
+    }
+    .radio-inline{
+      font-size: 20px;
+    }
+    #save_checkbox{
+    }
+    .readfinished {
+      background-color: #1b6d85 !important;
+    }
+    .readnotfinished {
+      background-color: #5cb85c !important;
+    }
+  </style>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/av.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/data_persistent.js"></script>
+  <script src="popup.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <script src="js/jquery.twbsPagination.js"></script>
+</head>
+<body>
+<!--这里开始就是我自由发挥了-->
+<div id="extension_name">
+<h2>Jojo's Blog timeline</h2>
+</div>
+
+<div id="unlogined">
+  <a class="btn" href="register.html">Register</a>
+  <a class="btn" href="login.html">Login</a>
+  <p>
+    Login to save your read timelines everywhere.
+  </p>
+</div>
+
+<div id="login_info" style="margin-left: 12px;" hidden>
+  <a id="username" style="cursor: default; text-decoration: inherit;"></a>
+  <a class="btn" id="logout">logout</a>
+
+
+<div id="save_checkbox" class="radio">
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="saveOneTab" value="option1" checked><a>保存当前页</a>
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="saveAllTab" value="option2"><a>保存全部标签页</a>
+  </label>
+  <button type="button" class="btn btn-success" id="save_to_leancloud">  保存  </button>
+</div>
+
+<div>
+<button type="button" class="btn info" id="change_status">改变状态</button>
+<button type="button" class="btn btn-danger" id="delete_leancloud">  删除  </button>
+</div>
+
+<div id="displayTimelines">
+  <!--<h3>这里要展示保存到的timeline</h3>-->
+
+  <ul class="list-group" id="page-content">
+
+  </ul>
+
+  <ul id="pagination-demo" class="pagination-sm"></ul>
+</div>
+</div>
+<script src="js/my_clock.js"></script>
+</body>
+</html>
+

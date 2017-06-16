@@ -284,11 +284,13 @@ jquery来操作的，因为用原生js实在是太麻烦了。
 av.init是全局的，只需要一次初始化就可以了。
 但是login，logout，涉及到的av.user是需要在每一个html和js里，都要初始化一边的，因为chrome并不共享数据。
 
+
 #### 开发firefox插件
 
 ##### 参考
 
 参考copy urls export 这个插件
+
 
 https://github.com/kashiif/copy-urls-expert
 
