@@ -16,6 +16,8 @@ $(document).ready(function() {
         user.signUp().then(function (loginedUser) {
             console.log("success");
             currentUser = loginedUser;
+            chrome.runtime.sendMessage({"login": "login", "username": username, "password": password}, function(response) {
+            });
             window.location.href = './popup.html';
         }, (function (error) {
             alert(JSON.stringify(error));
